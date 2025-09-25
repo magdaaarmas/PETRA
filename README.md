@@ -7,6 +7,7 @@ Folder contains the necessary codes for analysis of 6-mer insertion libraries. E
 
 ### a) Fastq to expression scores 
 Bash script fastq.sh is used to score 6-mer insertion variants from fastq files from single-end Ilumina reads (using dependent python scripts contained in folder). The code can be run once to score different experiments. 
+Outputs final expression scores and p-values
 
 Code line: 
 ```bash
@@ -25,6 +26,9 @@ alignment_reference_files (folder): folder containing .fasta files of reference 
 gene_list: list of genes to score in the format "gene1,gene2,gene3,gene4" (no spaces).  
 
 ### b) Explore variant features
+Bash script explore_variant_features.sh is used to assign variants with a RNA splicing score (previously computed by SpliceAI) and with a ORF category and Kozak sequence strength(using dependent python scripts contained in folder). Taked pre-computed data for TFBS scanning from FIMO to assign variants to TF binding, and compares effects of different TFBS. The code can be run once to score different experiments. 
+Outputs variant expression score file containing SpliceAI score and uORF classification, plus statistical data for TFBS analysis. 
+
 Code line: 
 ```bash
   sbatch explore_variant_features.sh experiment_name splice_ai_data_folder path_to_FIMO_files genes_jurkat_ls gene_list
@@ -44,4 +48,5 @@ genes_jurkat_ls: list of genes with TPM+1 >0 in Jurkat cells
 
 gene_list: list of genes to score in the format "gene1,gene2,gene3,gene4" (no spaces).  
 
-
+#### Examples
+The Example directory contains examples for all information files, as used for scoring variants in the PETRA manuscript. 
