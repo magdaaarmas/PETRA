@@ -1,0 +1,5 @@
+gene,gDNA_threshold,replicate_removed,removed_replicate,alignment_filter,splice_score_filter,splice_score_cat,expression_score_filter_splice,unfiltered_path
+VAV1,0.00001,FALSE,,300,0.1,max_score,FALSE,/Volumes/lab-findlayg/home/users/armasm/PETRA_large_screen_analysis/unfiltered_scoring/
+OTUD7B,0.00001,TRUE,3,300,0.1,max_score,FALSE,/Volumes/lab-findlayg/home/users/armasm/PETRA_large_screen_analysis/unfiltered_scoring/
+CD28,0.00001,FALSE,,300,0.1,max_score,FALSE,/Volumes/lab-findlayg/home/users/armasm/PETRA_large_screen_analysis/unfiltered_scoring/
+IL2RA,0.00008,FALSE,,300,0.1,max_score,FALSE,/Volumes/lab-findlayg/home/users/armasm/PETRA_large_screen_analysis/unfiltered_scoring/
