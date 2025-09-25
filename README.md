@@ -1,4 +1,4 @@
-# Scoring non-coding variants with PETRA
+# Interrogating the effect of non-coding variants with PETRA
 
 Code for scoring non-coding variants with PETRA.
 
