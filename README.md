@@ -48,5 +48,5 @@ genes_jurkat_ls: list of genes with TPM+1 >0 in Jurkat cells
 
 gene_list: list of genes to score in the format "gene1,gene2,gene3,gene4" (no spaces).  
 
-#### Examples
+## Examples
 The Example directory contains examples for all information files, as used for scoring variants in the PETRA manuscript. 
