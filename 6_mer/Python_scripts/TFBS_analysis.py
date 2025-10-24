@@ -10,7 +10,7 @@ from statsmodels.stats.multitest import multipletests
 
 gene=sys.argv[1]
 FIMO_output_path=sys.argv[2]
-FIMO_output_file=f"{FIMO_output_path}fimo.tsv"
+FIMO_output_file=f"{FIMO_output_path}/fimo.tsv"
 save_folder_general=sys.argv[3]
 save_folder=f"{save_folder_general}TFBS_anlysis/"
 os.makedirs(save_folder, exist_ok=True)
