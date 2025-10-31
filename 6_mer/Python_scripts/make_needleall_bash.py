@@ -47,7 +47,7 @@ for gene in genes:
                 reference = reference_cDNA
             else:
                 continue  # Skip files that don't contain either "gDNA" or "cDNA"
-            shell_file.write(f"needleall -asequence {reference} -bsequence {fastq_directory}/{i} -gapopen 10 -gapextend 0.5 -outfile aligned_reads/{gene}_aligned/{sample_name}.sam -aformat sam &\n")
+            shell_file.write(f"needleall -asequence {reference} -bsequence {fastq_directory}/{i} -gapopen 10 -gapextend 0.5 -outfile {experiment_name}/aligned_reads/{gene}_aligned/{sample_name}.sam -aformat sam &\n")
 
 shell_file.write('wait\necho "finished running all alignments"\n')
 shell_file.close()
