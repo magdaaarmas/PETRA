@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import sys
 from scipy.stats import norm
 
 ########################################################################################################################
@@ -19,7 +20,7 @@ def open_pickle(file_path: str) -> pd.DataFrame:
     with open(file_path, "rb") as fp:
         return pickle.load(fp)
 
-def pnorm_2sided(df: pd.DataFrame, score_col: str) -> pd.DataFrame:
+def pnorm_2_sided(df: pd.DataFrame, score_col: str) -> pd.DataFrame:
     """Two-sided normal p-values for the given column vs its own mean/std."""
     x = df[score_col].astype(float)
     mu = x.mean()
