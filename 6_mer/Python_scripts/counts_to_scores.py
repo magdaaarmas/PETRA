@@ -174,8 +174,8 @@ def filtering_check_correlations(df, save_path, thereshold=None):
     plt.close()
 def counts_to_scores(raw_counts_df_input, save_path):
     raw_counts_df_input=raw_counts_df_input.copy()
-    #remove WT and sum from dataframe
-    IDS_to_exclude=['WT', 'no_extension_found']
+
+    #remove the "total" row
     counts_df=raw_counts_df_input.drop('Total')
 
     #pseudocounts
@@ -183,17 +183,17 @@ def counts_to_scores(raw_counts_df_input, save_path):
 
     #calculate relative frequencies
     counts_df=calculate_relative_frequencies(counts_df)
-    ###to view correct relative frequency
-    totals=counts_df.sum()
 
+    #remove WT allele and unmatched alleles
+    IDS_to_exclude=['WT', 'no_extension_found']
     counts_df=counts_df[~counts_df['ID'].isin(IDS_to_exclude)]
 
-    #calculate average gDNA rel_freq for variants
+    # calculate average gDNA rel_freq for variants
     # calculate average gDNA rel_freq for variants
     counts_df=average_across_replicates_general(counts_df, 'gDNA_count_pseudocounts_rel_freq')
     counts_df = average_across_replicates_general(counts_df, 'cDNA_count_pseudocounts_rel_freq')
 
-    #calculate raw variant score
+    #calculate raw variant score and log2-transform
     counts_df=calculate_raw_scores(counts_df, 'count_pseudocounts_rel_freq')
 
     #intrareplicate normalization to median
