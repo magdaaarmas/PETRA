@@ -16,12 +16,13 @@ from scipy.stats import gaussian_kde
 ########################################################################################################################
 #to use locally
 path=os.getcwd()
-path_filtered=f"{path}/filtered_scores/"
-os.makedirs(path_filtered, exist_ok=True)
 gene=sys.argv[1]
 filtering_info_file=sys.argv[2]
-unfiltered_path=f"{path}/unfiltered_scoring/"
+experiment_folder=sys.argv[3]
 
+unfiltered_path=f"{path}/{experiment_folder}/unfiltered_scoring/"
+path_filtered=f"{path}/{experiment_folder}/filtered_scores/"
+os.makedirs(path_filtered, exist_ok=True)
 
 ########################################################################################################################
 

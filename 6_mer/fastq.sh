@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -e  # stop on error
 #SBATCH --job-name=PETRA_scoring
 #SBATCH --partition=ncpu
 #SBATCH --time='20:00:00'
@@ -10,6 +10,7 @@
 #SBATCH -e PETRA_fastq_to_scores.stderr
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=magdalena.armas@crick.ac.uk
+set -e  # stop on error
 
 experiment_name=$1
 min_alignment_score=300 # minimum alignment score needed to consider read
@@ -20,7 +21,7 @@ alignment_files_folder="${experiment_name}/alignment_reference_files/" #folder c
 
 # should be run in directory containing "alignment_reference_files" with .fasta files
 # align to reference amplicon
-python make_needleall_bash.py "$fastq_path_info" "$alignment_files_folder"
+python make_needleall_bash.py "$fastq_path_info" "$alignment_files_folder" "$experiment_name"
 bash run_needle.sh
 
 # filter based on alignment score
@@ -32,17 +33,16 @@ for gene in "${genes[@]}"; do
   echo "Processing gene: $gene"
 
 	# obtain variant counts
-	python raw_counts.py "$gene" "$min_alignment_score" "$genomic_context_file"
+	python raw_counts.py "$gene" "$min_alignment_score" "$genomic_context_file" "$experiment_name"
 
 	# score all variants to decide filtering threshold
-	python counts_to_scores.py "$gene" "$min_alignment_score" "$filtering_information_file"
+	python counts_to_scores.py "$gene" "$min_alignment_score" "$filtering_information_file" "$experiment_name"
 
 	# filter scores
-	python filter_scores.py "$gene" "$filtering_information_file"
+	python filter_scores.py "$gene" "$filtering_information_file" "$experiment_name"
+
+	#statistics
+	python stats_pnorm.py "$gene" "$experiment_name"
 done
 
-for d in aligned_reads filtered_scores raw_counts unfiltered_scoring; do
-  rm -rf "$experiment_name/$d"
-  mv "$d" "$experiment_name/"
-done
 

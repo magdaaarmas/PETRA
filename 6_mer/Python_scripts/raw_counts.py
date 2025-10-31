@@ -11,13 +11,7 @@ path=os.getcwd()
 gene=sys.argv[1]
 alignment_filter=sys.argv[2]
 loci_context_file=sys.argv[3]
-########################################################################################################################
-# #to use locally
-# path='/Volumes/lab-findlayg/home/users/armasm/PETRA_large_screen_analysis'
-# gene='VAV1'
-# alignment_filter='300'
-# loci_context_file='loci_genomic_context.csv'
-########################################################################################################################
+experiment_folder=sys.argv[4]
 
 def obtain_files_and_replicates(input_path):
     files={}
@@ -117,7 +111,7 @@ raw_counts=reduce(lambda left, right:pd.merge(left, right, on='ID', how='outer')
 raw_counts.loc['Total'] = raw_counts.sum()
 
 ########################################################################################################################
-output_path=f"{path}/raw_counts/"
+output_path=f"{path}/{experiment_folder}/raw_counts/"
 os.makedirs(output_path, exist_ok=True)
 
 raw_counts.to_csv(f"{output_path}{gene}_raw_counts.csv")

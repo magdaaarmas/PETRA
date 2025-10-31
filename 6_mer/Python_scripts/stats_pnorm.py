@@ -10,10 +10,9 @@ from scipy.stats import norm
 
 path=os.getcwd()
 gene=sys.argv[1]
-path_filtered=f"{path}/filtered_scores/"
-output_path=f"{path_filtered}stats_pnorm/"
-os.makedirs(output_path, exist_ok=True)
+experiment_folder=sys.argv[2]
 
+path_filtered=f"{path}/{experiment_folder}/filtered_scores/"
 
 ########################################################################################################################
 def open_pickle(file_path: str) -> pd.DataFrame:
@@ -56,14 +55,16 @@ def qq_plot(df: pd.DataFrame, pval_col: str, out_png: str, title: str):
     plt.title(title)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(out_png, dpi=300)
+    plt.savefig(f"{path_filtered}/{out_png}.png", dpi=300)
     plt.close()
 ########################################################################################################################
 
 scores=open_pickle(f"{path_filtered}{gene}_filtered_scores.pkl")
 statistics=pnorm_2_sided(scores, 'filtered_score')
-qq_plot(statistics, 'p_val', 2,f"QQ plot for {gene} pnorm")
-statistics.to_csv(f"{path_filtered}{gene}_filtered_scores_statistics.csv")
+qq_plot(statistics, 'p_val', f"{gene}_qq_plot" ,f"QQ plot for {gene} pnorm")
+statistics.to_csv(f"{path_filtered}{gene}_filtered_scores.csv")
+with open(f"{path_filtered}{gene}_filtered_scores.pkl", 'wb') as fp:
+    pickle.dump(statistics, fp)
 
 
 

@@ -16,6 +16,7 @@ path=os.getcwd()
 gene=sys.argv[1]
 alignment_filter=sys.argv[2]
 filtering_info_file=sys.argv[3]
+experiment_folder=sys.argv[4]
 
 ########################################################################################################################
 def obtain_replicate_number(df):
@@ -234,7 +235,7 @@ def counts_to_scores(raw_counts_df_input, save_path):
 
 ########################################################################################################################
 #create output directory
-output_path=f"{path}/unfiltered_scoring/"
+output_path=f"{path}/{experiment_folder}/unfiltered_scoring/"
 os.makedirs(output_path, exist_ok=True)
 
 #define colour scheme
@@ -243,7 +244,7 @@ gene_colour={'VAV1':set2_colors[0], 'CD28':set2_colors[1], 'IL2RA':set2_colors[2
 
 
 #obtain counts and number of replicates
-with (open(f"{path}/raw_counts/{gene}_raw_counts.pkl", 'rb') as fp):
+with (open(f"{path}/{experiment_folder}/raw_counts/{gene}_raw_counts.pkl", 'rb') as fp):
     counts_dataframe=pickle.load(fp)
 #neg samples are named "eg" in IL2RA and the neg from IL2RA have sample number, replace column names to normalise for all screens
 counts_dataframe.columns = [col.replace("eg_", "neg_") if "neg_" not in col else col for col in counts_dataframe.columns]

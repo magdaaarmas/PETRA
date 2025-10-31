@@ -12,7 +12,7 @@ gene=sys.argv[1]
 FIMO_output_path=sys.argv[2]
 FIMO_output_file=f"{FIMO_output_path}/fimo.tsv"
 save_folder_general=sys.argv[3]
-save_folder=f"{save_folder_general}TFBS_anlysis/"
+save_folder=f"{save_folder_general}TFBS_analysis/"
 os.makedirs(save_folder, exist_ok=True)
 genes_expressed_in_jurkat_ls=sys.argv[4] #genes_expressed_in_jurkat_ls='/Volumes/lab-findlayg/home/users/armasm/PETRA_large_screen_analysis/jurkat_expression/genes_expressed_in_jurkat_ls.pkl'
 

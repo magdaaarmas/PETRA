@@ -14,6 +14,7 @@ import pandas as pd
 
 file_locations=sys.argv[1]
 reference_directory=sys.argv[2]
+experiment_name=sys.argv[3]
 
 working_dir = os.getcwd()
 file_paths=pd.read_csv(file_locations)
@@ -24,7 +25,7 @@ shell_file.write('ml purge\nmodule load EMBOSS/6.6.0-foss-2016b\n') #ideally wou
 genes=file_paths['gene'].tolist()
 
 for gene in genes:
-    shell_file.write(f"mkdir -p aligned_reads/{gene}_aligned/\n")
+    shell_file.write(f"mkdir -p {experiment_name}/aligned_reads/{gene}_aligned/\n")
     path_value = file_paths.loc[file_paths['gene'] == gene, 'path'].values
     fastq_directory=path_value[0] if len(path_value) > 0 else None
 
