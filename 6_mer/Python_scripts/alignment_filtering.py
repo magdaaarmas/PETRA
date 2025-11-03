@@ -7,6 +7,8 @@ working_dir = os.getcwd()
 file_locations=sys.argv[1]
 min_alignment_score = sys.argv[2]
 min_alignment_score=int(min_alignment_score)
+experiment_folder=sys.argv[3]
+
 
 def sam_to_variant_cigar_files(sam_file, min_alignment_score, gene_directory):
     line_count = -2
@@ -26,29 +28,53 @@ def sam_to_variant_cigar_files(sam_file, min_alignment_score, gene_directory):
 
     with open(seq_output_file, 'w') as seq_outfile, open(cigar_output_file, 'w') as cigar_outfile, open(alignment_info_file,'w') as alignment_info_outfile:
         for line in sam_file:
-            if line_count < 0:
-                line_count += 1
+            # skip SAM header lines (start with '@') and empty lines
+            if not line.strip() or line.startswith('@'):
                 continue
+
+            sam_data = line.rstrip('\n').split('\t')
+
+            # need at least the 11 mandatory SAM fields (0..10) + typically optional fields
+            if len(sam_data) < 11:
+                # log malformed/short line and skip it
+                # you could write it to a debug file instead of printing
+                print(f"[WARN] skipping short/malformed SAM line: {line[:80]!r}")
+                continue
+
+            # safe access to standard fields
+            # QNAME(0), FLAG(1), RNAME(2), POS(3), MAPQ(4), CIGAR(5), ...
+            cigar = sam_data[5]
+
+            # OPTIONAL FIELDS: find the AS tag anywhere in sam_data[11:]
+            AS_field = None
+            for f in sam_data[11:]:
+                # accept formats like "AS:i:123" or "AS:i:-45"
+                if f.startswith('AS:'):
+                    AS_field = f
+                    break
+
+            if AS_field is None:
+                # no AS tag found — either skip, or treat as low-score
+                print(f"[INFO] no AS tag for read (treating as score 0): {sam_data[0]}")
+                score = 0.0
             else:
-                line_count += 1
-                sam_data = line.strip().split('\t')
-                # cigar string
-                cigar = sam_data[5]
-                # this is the alignment score -- not necessarily useful unless mispriming common
-                AS = sam_data[11]
-                # sequence of read
-                seq = sam_data[9]
-                # filter based on the alignment score -- good alignments should be over ~500
-                index_of_score = AS.find('i:') + 2
-                # this is the actual score
-                score = float(AS[index_of_score:])
-                # hard coded alignment score cuttoff (using needleall with 10 gap open and 0.5 gap extension -- 100 is fairly arbitrary -- very low to be inclusive. could raise to only look at better reads)
-                if score > min_alignment_score:
-                    seq_outfile.write(seq + '\n')
-                    cigar_outfile.write(cigar + '\n')
-                    reads_aligning += 1
-                else:
-                    reads_not_aligning += 1
+                # parse the numeric score robustly
+                # AS_field is like 'AS:i:123' -> take last part after ':'
+                try:
+                    score = float(AS_field.split(':')[-1])
+                except ValueError:
+                    print(f"[WARN] could not parse AS field {AS_field!r} for read {sam_data[0]}; skipping")
+                    continue
+
+            seq = sam_data[9]
+
+            if score > min_alignment_score:
+                seq_outfile.write(seq + '\n')
+                cigar_outfile.write(cigar + '\n')
+                reads_aligning += 1
+            else:
+                reads_not_aligning += 1
+
 
         alignment_info_outfile.write(f"Reads aligning: {reads_aligning}\n")
         alignment_info_outfile.write(f"Reads not aligning: {reads_not_aligning}\n")
@@ -57,7 +83,7 @@ file_paths=pd.read_csv(file_locations)
 genes=file_paths['gene'].tolist()
 
 for gene in genes:
-    specific_directory=f"{working_dir}/aligned_reads/{gene}_aligned/"
+    specific_directory=f"{working_dir}/{experiment_folder}/aligned_reads/{gene}_aligned/"
     for file in os.listdir(specific_directory):
         if file.endswith(".sam"):
             with open(specific_directory+file, 'r') as sam_file:

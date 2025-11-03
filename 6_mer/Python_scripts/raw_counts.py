@@ -86,7 +86,7 @@ def generate_GREP_variants(insert_length, pre_extension, post_extension):
 
 ########################################################################################################################
 #define gene path
-gene_path=f"{path}/aligned_reads/{gene}_aligned/{alignment_filter}_aligned_sequences/"
+gene_path=f"{path}/{experiment_folder}/aligned_reads/{gene}_aligned/{alignment_filter}_aligned_sequences/"
 
 #obtain files and name them appropriately, obtain number of replicates
 files, gDNA_files, cDNA_files, neg_files, number_of_replicates=obtain_files_and_replicates(gene_path)
