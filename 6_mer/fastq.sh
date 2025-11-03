@@ -20,11 +20,11 @@ alignment_files_folder="${experiment_name}/alignment_reference_files/" #folder c
 
 # should be run in directory containing "alignment_reference_files" with .fasta files
 # align to reference amplicon
-#python make_needleall_bash.py "$fastq_path_info" "$alignment_files_folder" "$experiment_name"
-#bash run_needle.sh
+python make_needleall_bash.py "$fastq_path_info" "$alignment_files_folder" "$experiment_name"
+bash run_needle.sh
 
 # filter based on alignment score
-#python alignment_filtering.py "$fastq_path_info" "$min_alignment_score" "$experiment_name"
+python alignment_filtering.py "$fastq_path_info" "$min_alignment_score" "$experiment_name"
 
 
 IFS=',' read -r -a genes <<< "$2"
