@@ -135,13 +135,13 @@ FIMO_scores=FIMO_scores[FIMO_scores['expressed_in_jurkats']==True]
 #Remove the TFBS that match to regions that DONT include the insert
 FIMO_insert_relevant=remove_non_insert(FIMO_scores)
 #save the filtered FIMO scores
-FIMO_insert_relevant.to_csv(f"{save_folder}FIMO_scores_insertion_relevant.csv")
+FIMO_insert_relevant.to_csv(f"{save_folder}{gene}_FIMO_scores_insertion_relevant.csv")
 #After this point the information about scores and p-values is lost and only the TFBS that were hits based on the threshold
 #set up in FIMO will remain.
 
 #separate by gene and group into insert ID matches
 hits_dict_ls=obtain_gene_hits(FIMO_insert_relevant)
-with open(f"{save_folder}FIMO_dict_hits_list.pkl", 'wb') as fp:
+with open(f"{save_folder}{gene}_FIMO_dict_hits_list.pkl", 'wb') as fp:
     pickle.dump(hits_dict_ls, fp)
 
 #obtain ES
