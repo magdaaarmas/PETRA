@@ -258,6 +258,7 @@ parameters=parameters[parameters['gene']==gene]
 tentative_filtering_thereshold=parameters['gDNA_threshold'].values[0]
 remove_replicate=parameters['replicate_removed'].values[0]
 replicate_to_remove=parameters['removed_replicate'].values[0]
+replicate_to_remove = int(float(replicate_to_remove))
 
 #score variants
 counts_to_scores(counts_dataframe, output_path)
