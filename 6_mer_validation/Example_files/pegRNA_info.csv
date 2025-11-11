@@ -1,0 +1,5 @@
+﻿gene,location,peg_target_strand
+VAV1,/nemo/lab/findlayg/home/users/armasm/mini_pool_june_2024/mini_pool_design/VAV1_pegRNA_info.csv,coding
+CD28,/nemo/lab/findlayg/home/users/armasm/mini_pool_june_2024/mini_pool_design/CD28_pegRNA_info.csv,coding
+OTUD7B,/nemo/lab/findlayg/home/users/armasm/mini_pool_june_2024/mini_pool_design/OTUD7B_pegRNA_info.csv,non-coding
+IL2RA,/nemo/lab/findlayg/home/users/armasm/mini_pool_june_2024/mini_pool_design/IL2RA_jurkat_pegRNA_info.csv,coding
