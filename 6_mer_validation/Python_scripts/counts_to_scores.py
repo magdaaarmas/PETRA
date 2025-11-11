@@ -81,7 +81,6 @@ def normalise_average_to_median(df, column_name):
     average_median=df[column_name].median()
     df[column_name+'_norm']=df[column_name]-average_median
     return df
-
 def plot_correlations(df, save_path):
     df=df.copy()
 
@@ -131,7 +130,6 @@ def plot_correlations(df, save_path):
     scores=[f"score_{i}_log2_norm" for i in range(1,replicates+1)]
     plot_variables=[gDNA, cDNA, scores]
     plot_and_correlate(df, plot_variables, save_path)
-
 def filtering_check(df, save_path,thereshold=None):
     df=df.copy()
     df.sort_values(by='gDNA_count_pseudocounts_rel_freq_average_replicates', ascending=False, inplace=True, ignore_index=True)
@@ -150,7 +148,6 @@ def filtering_check(df, save_path,thereshold=None):
     plt.savefig(save_path+gene+'_filtering_visualisation'+threshold_name+'.png', format='png', dpi=300)
     # plt.show()
     plt.close()
-
 def filtering_check_correlations(df, save_path, thereshold=None):
     df=df.copy()
     fig, ax=plt.subplots(figsize=(8, 4))
@@ -209,37 +206,9 @@ def counts_to_scores(raw_counts_df_input, save_path):
         pickle.dump(counts_df, fp)
     counts_df.to_csv(save_path+gene+'_unfiltered_scores.csv')
 
-    ########################################################################################################################
-    #make plots to decide on filtering
-    counts_df_plotting=counts_df.copy()
-
-    output_path_plots=save_path+gene+'_unfiltered_figures/'
-    os.makedirs(output_path_plots, exist_ok=True)
-
-    #calculate log2 of relative frequencies
-    for i in range(1,replicates+1):
-        column1=f"{i}gDNA_count_pseudocounts_rel_freq"
-        column2 = f"{i}cDNA_count_pseudocounts_rel_freq"
-        counts_df_plotting=add_log2_column(counts_df_plotting, column1)
-        counts_df_plotting = add_log2_column(counts_df_plotting, column2)
-
-    #plot replicate correlations
-    plot_correlations(counts_df_plotting, output_path_plots)
-
-    #plot gDNA frequency vs score
-    filtering_check(counts_df_plotting, output_path_plots, tentative_filtering_thereshold)
-    filtering_check_correlations(counts_df_plotting, output_path_plots, tentative_filtering_thereshold)
-
-
-########################################################################################################################
 #create output directory
 output_path=f"{path}/{experiment_folder}/unfiltered_scoring/"
 os.makedirs(output_path, exist_ok=True)
-
-#define colour scheme
-set2_colors = plt.get_cmap('Set2').colors
-gene_colour={'VAV1':set2_colors[0], 'CD28':set2_colors[1], 'IL2RA':set2_colors[2], 'OTUD7B':set2_colors[3]}
-
 
 #obtain counts and number of replicates
 with (open(f"{path}/{experiment_folder}/raw_counts/{gene}_raw_counts.pkl", 'rb') as fp):
@@ -254,20 +223,6 @@ replicates=obtain_replicate_number(counts_dataframe)
 parameters=pd.read_csv(f"{filtering_info_file}")
 parameters=parameters[parameters['gene']==gene]
 tentative_filtering_thereshold=parameters['gDNA_threshold'].values[0]
-remove_replicate=parameters['replicate_removed'].values[0]
-replicate_to_remove=parameters['removed_replicate'].values[0]
-if remove_replicate:
-    replicate_to_remove = int(float(replicate_to_remove))
 
 #score variants
 counts_to_scores(counts_dataframe, output_path)
-
-#score variants with replicate removed
-if remove_replicate:
-    output_path_no_rep = f"{output_path}/{gene}_unfiltered_scoring_rep_filtered/"
-    os.makedirs(output_path_no_rep, exist_ok=True)
-    columns=counts_dataframe.columns.tolist()
-    columns_to_keep=[column for column in columns if str(replicate_to_remove) not in column]
-    counts_dataframe_rep_removed=counts_dataframe[columns_to_keep]
-    replicates = obtain_replicate_number(counts_dataframe_rep_removed)
-    counts_to_scores(counts_dataframe_rep_removed, output_path_no_rep)
