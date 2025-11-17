@@ -1,0 +1,26 @@
+,Lymphocytes/Single Cells | Mean (FL2-A :: IL2RA: PE-A),"Lymphocytes/Single Cells/IL2RA: PE-A, FITC-A subset | Mean (FL2-A :: IL2RA: PE-A)","Lymphocytes/Single Cells/IL2RA: PE-A, FITC-A subset | Freq. of Total (%)",name_to_plot,type
+1_1_Data Source - 1.fcs,11065,19691,33.0,MYBL2_homodimer,positive
+1_2_Data Source - 1.fcs,11318,20532,32.0,MYBL2_homodimer,positive
+2_1_Data Source - 1.fcs,9429,18664,28.3,TFAP2A_homodimer,positive
+2_2_Data Source - 1.fcs,9869,19230,28.7,TFAP2A_homodimer,positive
+3_1_Data Source - 1.fcs,7956,17812,24.5,TFAP2A_homotrimer,positive
+3_2_Data Source - 1.fcs,7583,16975,23.9,TFAP2A_homotrimer,positive
+4_1_Data Source - 1.fcs,9241,18329,28.8,neutral_AACTGT,neutral
+4_2_Data Source - 1.fcs,8769,18285,26.9,neutral_AACTGT,neutral
+5_1_Data Source - 1.fcs,8478,17725,27.5,neutral_CATTAG,neutral
+5_2_Data Source - 1.fcs,8369,18817,24.5,neutral_CATTAG,neutral
+6_1_Data Source - 1.fcs,11700,20410,34.7,sequence_CGTTAT,positive
+6_2_Data Source - 1.fcs,12083,20550,36.1,sequence_CGTTAT,positive
+7_1_Data Source - 1.fcs,10685,19296,32.0,sequence_GGTTTA,positive
+7_2_Data Source - 1.fcs,12432,20577,37.2,sequence_GGTTTA,positive
+8_1_Data Source - 1.fcs,8807,17985,27.7,sequence_ATGGAT,positive
+8_2_Data Source - 1.fcs,8711,17566,28.2,sequence_ATGGAT,positive
+NEG1_ACT_Data Source - 1.fcs,8280,17600,24.9,neg_ACT,neg
+NEG1_NA_Data Source - 1.fcs,2003,5631,0.12,neg_NA,neg
+NEG2_ACT_Data Source - 1.fcs,10505,19289,31.7,neg_ACT,neg
+NEG2_NA_Data Source - 1.fcs,2005,5786,0.100,neg_NA,neg
+WT_ACT_Data Source - 1.fcs,6453,16794,15.0,WT_ACT,WT
+WT_NA_Data Source - 1.fcs,1959,6937,0.11,WT_NA,WT
+WT_NEG_Data Source - 1.fcs,1814,4864,0.0100,WT_unstained,WT
+Mean,8240,16493,23.7,,
+SD,3310,5144,12.0,,
