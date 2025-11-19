@@ -29,19 +29,19 @@ mkdir -p "$output_dir"
 
 # should be run in directory containing "alignment_reference_files" with .fasta files
 # align to reference amplicon
-#python make_needleall_bash_TF_tandem.py "$fastq_path_info" "$gene" "$cell_type" "$read" "$alignment_files_folder" "$experiment_name" "$output_dir"
-#cd "$output_dir"
+python make_needleall_bash_TF_tandem.py "$fastq_path_info" "$gene" "$cell_type" "$read" "$alignment_files_folder" "$experiment_name" "$output_dir"
+cd "$output_dir"
 
-#bash run_needle.sh
+bash run_needle.sh
 
-#cd "$homedir"
+cd "$homedir"
 # filter based on alignment score
-#python alignment_filtering.py "$fastq_path_info" "$gene" "$min_alignment_score" "$experiment_name" "$output_dir"
+python alignment_filtering.py "$fastq_path_info" "$gene" "$min_alignment_score" "$experiment_name" "$output_dir"
 
 ## obtain variant counts
-#python raw_counts_TF_tandem.py "$gene" "$cell_type" "$min_alignment_score" "$genomic_context_file" "$pegRNA_info_file" "$experiment_name"
-#
-## score all variants to decide filtering threshold
+python raw_counts_TF_tandem.py "$gene" "$cell_type" "$min_alignment_score" "$genomic_context_file" "$pegRNA_info_file" "$experiment_name"
+
+# score all variants to decide filtering threshold
 python counts_to_scores.py "$gene" "$cell_type" "$experiment_name" "$pegRNA_info_file"
 
 
