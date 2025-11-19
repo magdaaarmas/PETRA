@@ -1,10 +1,10 @@
 # Scoring MYBL2 and EGR1 insertions in IL2RA
 
-Folder contains the necessary codes for analysis of 6-mer insertion libraries. Each step consists of a bash script with dependent Python scripts. 
+Folder contains the necessary codes for analysis of libraries of multiple MYBL2 and EGR1 insertions. Each step consists of a bash script with dependent Python scripts. 
 Examples for all input information files can be found in the Example_files directory
 
 ## 1) Fastq to expression scores 
-Bash script fastq.sh is used to score 6-mer insertion variants from fastq files from single-end Ilumina reads (using dependent python scripts contained in folder). The code can be run once to score different experiments. 
+Bash script fastq.sh is used to score variants from fastq files from single-end Ilumina reads (using dependent python scripts contained in folder). The code can be run once to score different experiments. 
 Outputs final expression scores.
 
 Code line: 

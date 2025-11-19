@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+#SBATCH --job-name=PETRA_scoring
+#SBATCH --partition=ncpu
+#SBATCH --time='20:00:00'
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=15
+#SBATCH --mem=100GB
+#SBATCH -o PETRA_fastq_to_scores.log
+#SBATCH -e PETRA_fastq_to_scores.stderr
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=magdalena.armas@crick.ac.uk
+set -e  # stop on error
+
+experiment_name=$1
+gene=$2
+cell_type=$3
+read=$4
+
+homedir=$(pwd)
+min_alignment_score=300 # minimum alignment score needed to consider read
+fastq_path_info="${experiment_name}/file_locations.csv" # contains gene names and path to folder with fastq files
+genomic_context_file="${experiment_name}/loci_genomic_context.csv" # gene names + context sequences
+pegRNA_info_file="${experiment_name}/${gene}_variant_info.csv" # insertion names and sequences
+alignment_files_folder="${experiment_name}/alignment_reference_files/" #folder containing .fasta files with amplicon sequences for alignment
+
+#make an output folder for the specific gene and cell type
+output_dir="$experiment_name"/"$cell_type"/"$gene"
+mkdir -p "$output_dir"
+
+# should be run in directory containing "alignment_reference_files" with .fasta files
+# align to reference amplicon
+#python make_needleall_bash_TF_tandem.py "$fastq_path_info" "$gene" "$cell_type" "$read" "$alignment_files_folder" "$experiment_name" "$output_dir"
+#cd "$output_dir"
+
+#bash run_needle.sh
+
+#cd "$homedir"
+# filter based on alignment score
+#python alignment_filtering.py "$fastq_path_info" "$gene" "$min_alignment_score" "$experiment_name" "$output_dir"
+
+## obtain variant counts
+#python raw_counts_TF_tandem.py "$gene" "$cell_type" "$min_alignment_score" "$genomic_context_file" "$pegRNA_info_file" "$experiment_name"
+#
+## score all variants to decide filtering threshold
+python counts_to_scores.py "$gene" "$cell_type" "$experiment_name" "$pegRNA_info_file"
+
+
+
