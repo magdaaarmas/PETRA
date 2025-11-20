@@ -149,7 +149,7 @@ def counts_to_scores(raw_counts_df_input):
     counts_df = calculate_relative_frequencies(counts_df)
 
     # remove WT allele and unmatched alleles
-    IDS_to_exclude = ['no_extension_found']
+    IDS_to_exclude = ['WT', 'no_extension_found']
     counts_df = counts_df[~counts_df['ID'].isin(IDS_to_exclude)]
 
     # calculate average gDNA rel_freq for variants
