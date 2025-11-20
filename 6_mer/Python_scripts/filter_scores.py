@@ -1,8 +1,6 @@
 import sys
 import os
 import pandas as pd
-from functools import reduce
-from itertools import product
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt

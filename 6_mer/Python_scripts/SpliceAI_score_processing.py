@@ -1,12 +1,6 @@
-import matplotlib.pyplot as plt
 import pandas as pd
-import plotly.express as px
 import sys
-import os
 from Bio.Seq import Seq
-import pickle
-import seaborn as sns
-import scipy
 
 ########################################################################################################################
 

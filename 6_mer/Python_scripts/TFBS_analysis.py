@@ -15,7 +15,6 @@ save_folder_general=sys.argv[3]
 save_folder=f"{save_folder_general}TFBS_analysis/"
 os.makedirs(save_folder, exist_ok=True)
 genes_expressed_in_jurkat_ls=sys.argv[4] #genes_expressed_in_jurkat_ls='/Volumes/lab-findlayg/home/users/armasm/PETRA_large_screen_analysis/jurkat_expression/genes_expressed_in_jurkat_ls.pkl'
-
 max_score_threshold=0.1 #splice AI maximum score for considering for analysis
 
 ########################################################################################################################
@@ -43,7 +42,6 @@ def remove_non_insert(df):
     condition = (df['start'] <= 26) & (df['stop'] >= 21)
     df=df[condition]
     return df
-
 def obtain_gene_hits(df):
     df = df.copy()
     genes_hits={}
@@ -98,8 +96,6 @@ def compute_TFBS_statistics(hits_list_dict, gene, score_df):
 
     statistics_KS = pd.DataFrame(hits_statistics_KS, columns=['TF', 'log2FC','change_type', 't', 'p'])
     return statistics_KS
-
-
 def p_value_corrections(df_with_stats):
     info=df_with_stats
     #filter out errors in statistical processing
@@ -112,8 +108,6 @@ def p_value_corrections(df_with_stats):
     
     return info
 ########################################################################################################################
-#------ merge TF hits to varinats ------ #
-
 #obtain fimo scores
 FIMO_scores=pd.read_csv(FIMO_output_file, sep='\t')
 
@@ -134,15 +128,9 @@ FIMO_scores=FIMO_scores[FIMO_scores['expressed_in_jurkats']==True]
 
 #Remove the TFBS that match to regions that DONT include the insert
 FIMO_insert_relevant=remove_non_insert(FIMO_scores)
-#save the filtered FIMO scores
-FIMO_insert_relevant.to_csv(f"{save_folder}{gene}_FIMO_scores_insertion_relevant.csv")
-#After this point the information about scores and p-values is lost and only the TFBS that were hits based on the threshold
-#set up in FIMO will remain.
 
 #separate by gene and group into insert ID matches
 hits_dict_ls=obtain_gene_hits(FIMO_insert_relevant)
-with open(f"{save_folder}{gene}_FIMO_dict_hits_list.pkl", 'wb') as fp:
-    pickle.dump(hits_dict_ls, fp)
 
 #obtain ES
 expression_scores_df=pd.read_csv(f"{save_folder_general}{gene}_scores_variant_features.csv")
@@ -150,18 +138,13 @@ expression_scores_df=pd.read_csv(f"{save_folder_general}{gene}_scores_variant_fe
 #merge ES to TFBS detection
 ES_TFBS_merged_df=merge_TFBS_ES(expression_scores_df, hits_dict_ls)
 
-ES_TFBS_merged_df.to_csv(f"{save_folder}{gene}_ES_TFBS_merged.csv", index=False)
-
-
 #------ STATISTICS ------ #
-
 df=ES_TFBS_merged_df.copy()
 
-#filter out vairants with high spliceAI score
+#filter out variants with high spliceAI score
 df['filter_out'] = np.where(df['max_score'] >= max_score_threshold,True, False)
 df = df[df['filter_out'] == False]
 stat_KS_df=compute_TFBS_statistics(hits_dict_ls, gene, df)
 stat_KS_df=p_value_corrections(stat_KS_df)
-
 stat_KS_df.to_csv(f"{save_folder}{gene}_TFBS_analysis.csv")
 

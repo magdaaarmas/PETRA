@@ -1,11 +1,3 @@
-#run_needle_to_sam_sbatch_pipeline.py
-#will output a script to be run in shell
-#to be run in directory with the fastq files (merged, unzipped)
-#this re-works naming scheme to switch from dashes to UNDERSCORES
-#uses the dot in the .merged.fastq to remove suffix / define sample 'i.e. X17r1-pre.merged.fastq'
-
-#amplicon+replicate+'-'+timepoint.merged.fastq
-
 import os
 import sys
 import pandas as pd

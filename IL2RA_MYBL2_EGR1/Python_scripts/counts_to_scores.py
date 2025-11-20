@@ -1,12 +1,7 @@
 import sys
 import os
-import pandas as pd
 import pickle
 import numpy as np
-import matplotlib.pyplot as plt
-import scipy
-import matplotlib.ticker as ticker
-import seaborn as sns
 
 ########################################################################################################################
 #to use locally
