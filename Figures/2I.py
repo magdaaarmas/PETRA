@@ -13,7 +13,7 @@ genes=['CD28']
 data_directory=(f"{cwd}/data/6_mer/jurkat/")
 files_name='_TFBS_analysis.csv'
 fig_width_mm=45
-fig_height_mm=60
+fig_height_mm=50
 significance_threshold=0.05
 
 ########################################################################################################################
