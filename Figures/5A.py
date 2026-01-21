@@ -10,8 +10,8 @@ cwd=os.getcwd()
 figure_name='5A'
 genes=['VAV1', 'CD28', 'IL2RA', 'OTUD7B']
 data_directory=(f"{cwd}/data/6_mer/")
-fig_width_mm=90
-fig_height_mm=80
+fig_width_mm=80
+fig_height_mm=63
 min_heatmap=-0.5
 max_heatmap=0.7
 
